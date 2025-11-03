@@ -5,13 +5,10 @@ class Player:
 
     def __init__(self, cor, color, name):
 
-        # Základní nastavení hráče při startů
-        # ------------
-
-        # Jméno
+        # Name
         self.name = name
         
-        # Hlava
+        # Head
         self.head = Turtle("square")
         self.head.penup()
         self.head.color(color)
@@ -20,16 +17,16 @@ class Player:
         self.head.startcor = cor[0], cor[1]
         self.head.goto(self.head.startcor)
 
-        # Tělo
+        # Body list
         self.body = []
 
-        # Skore
+        # Score
         self.score = 0
 
-        # Životy
+        # Lives
         self.lives= 3
     
-    # Pohyb těla za hlavou
+    # Body movement following the head
     def body_move(self):
         if len(self.body) > 0:
             for index in range(len(self.body), 1, -1):
@@ -40,14 +37,14 @@ class Player:
             
             self.body[0].goto(self.head.xcor(), self.head.ycor())
 
-    # Vymazání těla
+    # Body deletion
     def body_delete(self):
         for one_body_part in self.body:
             one_body_part.goto(1500, 1500)
         self.body = []
         self.score = 0
 
-    # Vymazání části těla
+    # Body part deletion
     def body_part_delete(self, index):
         for i in range(len(self.body)-1, index-1, -1):
             one_body_part = self.body[i]
@@ -55,33 +52,32 @@ class Player:
             self.body.remove(one_body_part)
             self.score -= 1
 
-    # Nastavení směru
+    # Direction setting
     def move_up(self):
-        "Nastaví pohyb nahoru"
+        "Set movement direction to up"
         if self.head.direction != "down":
             self.head.direction = "up"
 
     def move_down(self):
-        "Nastaví pohyb dolu"
+        "Set movement direction to down"
         if self.head.direction != "up":
             self.head.direction = "down"
 
     def move_left(self):
-        "Nastaví pohyb doleva"
+        "Set movement direction to left"
         if self.head.direction != "right":
             self.head.direction = "left"
 
     def move_right(self):
-        "Nastaví pohyb doprava"
+        "Set movement direction to right"
         if self.head.direction != "left":
             self.head.direction = "right"
 
 
-    # Provedení směru
+    # Direction execution
     def move(self):
         """Zajištuje pohyb"""
         if self.head.direction == "up":
-            # Vezme aktuální souřadnici Y a k ní přičítá pohyb nahoru
             y = self.head.ycor()
             self.head.sety(y + 20) 
         elif self.head.direction == "down":
