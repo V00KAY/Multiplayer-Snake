@@ -91,4 +91,46 @@ class Player:
             self.head.setx(x + 20) 
 
     
+    def reset(self):
+        time.sleep(0.4)
+        self.lives -= 1
 
+        self.body_delete()
+
+        self.head.goto(self.head.startcor)
+
+    def pick_apple(self):
+
+        self.body_part = Turtle("square")
+        self.body_part.color("grey")
+        self.body_part.penup()
+
+        self.score += 1
+
+        self.body.append(self.body_part)
+
+    def hit_yourself(self):
+        for one_body_part in self.body:
+            if self.head.distance(one_body_part) < 20:
+                self.reset()
+
+    def collision_with_borders(self, min_y, max_y, min_x, max_x):
+        if self.head.xcor() > max_x or self.head.xcor() < min_x or self.head.ycor() > max_y or self.head.ycor() < min_y:
+            self.reset()
+
+    def collision_with_player(self, opponent):
+
+        self.opponent = opponent
+
+        for index in range(0, len(opponent.body)):
+            one_body_part = opponent.body[index]
+            if self.head.distance(one_body_part) < 20:
+                self.reset()
+                opponent.body_part_delete(index)
+                break
+
+    def collision_with_apple(self, apple):
+
+        if self.head.distance(apple.body) < 20:
+            self.pick_apple()
+            apple.apple_teleport() 
