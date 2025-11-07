@@ -12,10 +12,10 @@ class Player:
         self.head = Turtle("square")
         self.head.penup()
         self.head.color(color)
-        self.head.direction = "stop"
+        self.direction = "stop"
 
-        self.head.startcor = cor[0], cor[1]
-        self.head.goto(self.head.startcor)
+        self.startcor = cor[0], cor[1]
+        self.head.goto(self.startcor)
 
         # Body list
         self.body = []
@@ -28,7 +28,7 @@ class Player:
     
     # Body movement following the head
     def body_move(self):
-        if len(self.body) > 0:
+        if self.body:
             for index in range(len(self.body), 1, -1):
                 one_body_part = self.body[index - 1]
                 next_body_part = self.body[index - 2]
@@ -55,38 +55,38 @@ class Player:
     # Direction setting
     def move_up(self):
         "Set movement direction to up"
-        if self.head.direction != "down":
-            self.head.direction = "up"
+        if self.direction != "down":
+            self.direction = "up"
 
     def move_down(self):
         "Set movement direction to down"
-        if self.head.direction != "up":
-            self.head.direction = "down"
+        if self.direction != "up":
+            self.direction = "down"
 
     def move_left(self):
         "Set movement direction to left"
-        if self.head.direction != "right":
-            self.head.direction = "left"
+        if self.direction != "right":
+            self.direction = "left"
 
     def move_right(self):
         "Set movement direction to right"
-        if self.head.direction != "left":
-            self.head.direction = "right"
+        if self.direction != "left":
+            self.direction = "right"
 
 
     # Direction execution
     def move(self):
         """Zajištuje pohyb"""
-        if self.head.direction == "up":
+        if self.direction == "up":
             y = self.head.ycor()
             self.head.sety(y + 20) 
-        elif self.head.direction == "down":
+        elif self.direction == "down":
             y = self.head.ycor()
             self.head.sety(y - 20) 
-        elif self.head.direction == "left":
+        elif self.direction == "left":
             x = self.head.xcor()
             self.head.setx(x - 20) 
-        elif self.head.direction == "right":
+        elif self.direction == "right":
             x = self.head.xcor()
             self.head.setx(x + 20) 
 
@@ -97,7 +97,7 @@ class Player:
 
         self.body_delete()
 
-        self.head.goto(self.head.startcor)
+        self.head.goto(self.startcor)
 
     def pick_apple(self):
 
@@ -122,8 +122,7 @@ class Player:
 
         self.opponent = opponent
 
-        for index in range(0, len(opponent.body)):
-            one_body_part = opponent.body[index]
+        for index, one_body_part in enumerate(opponent.body):
             if self.head.distance(one_body_part) < 20:
                 self.reset()
                 opponent.body_part_delete(index)
