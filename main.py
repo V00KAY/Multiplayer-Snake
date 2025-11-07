@@ -14,11 +14,11 @@ def main():
 
     # Objects
     # --------
-    player1 = Player([-250, 0], "black", "Player 1")
-    player2 = Player([250, 0], "white", "Player 2")
+    player1 = Player((-250, 0), "black", "Player 1")
+    player2 = Player((250, 0), "white", "Player 2")
 
-    stats1 = Stats([-430, 430], player1.name)
-    stats2 = Stats([430, 430], player2.name)
+    stats1 = Stats((-430, 430), player1.name)
+    stats2 = Stats((430, 430), player2.name)
 
     apple = Apple()
 
